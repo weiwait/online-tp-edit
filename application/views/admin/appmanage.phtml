@@ -1,0 +1,110 @@
+<?php use utils\Common;?>
+<?php use base\ServiceFactory;?>
+<?php require Common::getRequirePath() . "/header.phtml"; ?>
+
+<form action='/admin/appmanage' method='POST'>
+<table style='width:100%;background:#ACC5E0;' cellpadding='4' cellspacing='1'>
+<tr style='background:#ffffff;'><td colspan='2'>app搜索</td></tr>
+<tr style='background:#ffffff;'><td style='width:60px;'>app id</td><td><input type='text' name='appid' style='width:500px' value='<?php echo $_REQUEST['appid'];?>'></td></tr>
+<br>
+<td><a href="/admin/appmanage/status/1">在线</a>|<a href="/admin/appmanage/status/2">离线</a></td>
+<table>
+<center><input type='submit' value=' 确 定 '></center>
+</form>
+
+<?php
+if(!empty($data) && $total > 0)
+{
+?>
+<table style='width:100%;background:#ACC5E0;' cellpadding='4' cellspacing='1'>
+<tr style='background:#ffffff;'><td colspan='13'>app列表</td></tr>
+<tr style='background:#ffffff;'><td>appid</td><td>机型</td><td>注册时间</td><td>注册ip</td><td>最后活跃时间</td><td>最后活跃ip</td><td>在线状态</td><td>管理电器数量</td><td>反馈</td><td>地图位置</td><td>使用天数</td><td>平均每天<br/>登陆次数</td><td>平均每天<br/>使用时间</td></tr>
+<?php
+    foreach($data as $item)
+    {
+        $useStat = ServiceFactory::getService("App")->getAppUseStat($item['tp_appid']);
+        $isOnline = ServiceFactory::getService("App")->isActive($item['tp_appid']);
+        if($isOnline)
+        {
+            $isOnlineStr = "<font color='#000000'><b>在线</b></font>"; 
+        }
+        else
+        {
+            $isOnlineStr = "<font color='#999999'>不在线</font>"; 
+        }
+
+        $feedbackStr = ""; 
+        $feedbackNum = ServiceFactory::getService("Feedback")->getCountByTpappid($item['tp_appid']);
+        if($feedbackNum > 0)
+        {
+            $feedbackStr = "<a href='/admin/feedbackmanage/tpAppid/".$item['tp_appid']."'>".$feedbackNum."条</a>"; 
+        }
+        echo "<tr style='background:#ffffff;'><td style='width:230px;'>".$item['appid']."</td><td>".$item['phone_type']."</td><td>".date("Y-m-d H:i:s",$item['createtime'])."</td><td>".ip($item['create_ip'])."</td><td>".date("Y-m-d H:i:s", $item['last_active_time'])."</td><td>".ip($item['last_active_ip'])."</td><td>".$isOnlineStr."</td><td>";
+        if(!empty($item['machineNum']))
+        {
+            echo "<a href='/admin/machinemanage/tpAppid/".$item['tp_appid']."'>".$item['machineNum']."台</a>"; 
+        }
+        else
+        {
+            echo "0台";
+        }
+        echo "</td><td>".$feedbackStr."</td><td>";
+        if(!empty($item['longitude']) || !empty($item['latitude']))
+        {
+            echo "<a href='/admin/location/longitude/".$item['longitude']."/latitude/".$item['latitude']."' target='blank'>查看</a>";
+        }
+        else
+        {
+            echo ""; 
+        }
+        echo "</td>";
+        if($useStat['useDay']>0)
+        {
+            $t = ceil($useStat['loginTime']/$useStat['useDay']);
+            $d = intval($t/3600);
+            $m = intval(($t%3600)/60);
+            $timeStr = "";
+            if($d > 0)
+            {
+                $timeStr .= $d."小时";
+            }
+            if($m > 0)
+            {
+                $timeStr .= $m."分钟";
+            }
+            
+            echo "<td>".$useStat['useDay']."</td><td>".number_format($useStat['loginNum']/$useStat['useDay'], 2, ".", "")."</td><td>".$timeStr."</td>";
+        }
+        else
+        {
+            echo "<td></td><td></td><td></td>";
+        }
+        echo "</tr>"; 
+    }
+?>
+<table>
+<?php
+    echo "<center>一共".$total."台&nbsp;在线".$onlineTotal."台&nbsp;";
+    if($allPage > 1)
+    {
+        for($i=1; $i<=$allPage; ++$i)
+        {
+            if($i == $page)
+            {
+                echo "&nbsp;".$i."&nbsp;"; 
+            }
+            else
+            {
+                echo "&nbsp;<a href='/admin/appmanage/page/".$i."/pagesize/".$pagesize."/status/".$_REQUEST['status']."'>&nbsp;".$i."&nbsp;</a>&nbsp;"; 
+            }
+        }
+    }
+    echo "</center>";
+}
+else
+{
+    echo "<center>没有找到相关记录</center>";
+}
+?>
+
+<?php require Common::getRequirePath() . "/footer.phtml"; ?>

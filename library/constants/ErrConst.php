@@ -1,0 +1,19 @@
+<?php
+namespace constants;
+class ErrConst
+{
+    const ERR_CONST_VER_EMPTY = 601;
+    const ERR_CONST_APPID_EMPTY = 602;
+    const ERR_CONST_DECIPHER_ERR = 603;
+    const ERR_CONST_INVALID_SIGN = 604;
+    const ERR_CONST_UUID_EMPTY = 605;
+    const ERR_CONST_SIGN_EMPTY = 606;
+    const ERR_CONST_DB_ERR = 607;
+    const ERR_CONST_INVALID_REQ = 608;
+    const ERR_CONST_GET_SIGN_ERR = 609;
+
+    const ERR_CONST_SETUP_DUPLICATE_UUID = 621;
+    const ERR_CONST_SETUP_DUPLICATE_CLIENTID = 622;
+    const ERR_CONST_SIGNIN_DUPLICATE_UUID = 631;
+
+}

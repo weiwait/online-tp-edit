@@ -1,0 +1,126 @@
+<?php use utils\Common;?>
+<?php use base\ServiceFactory;?>
+<?php require Common::getRequirePath() . "/header.phtml"; ?>
+
+<form action='/admin/machinemanage' method='POST'>
+<table style='width:100%;background:#ACC5E0;' cellpadding='4' cellspacing='1'>
+<tr style='background:#ffffff;'><td colspan='2'>商品搜索</td></tr>
+<tr style='background:#ffffff;'><td style='width:60px;'>商品id</td><td><input type='text' name='machineid' style='width:500px' value='<?php echo $_REQUEST['machineid'];?>'></td></tr>
+<br>
+<td><a href="/admin/machinemanage/status/1">在线</a>|<a href="/admin/machinemanage/status/2">离线</a></td>
+<table>
+<center><input type='submit' value=' 确 定 '></center>
+</form>
+
+<?php
+if(!empty($data) && $total > 0)
+{
+?>
+<table style='width:100%;background:#ACC5E0;' cellpadding='4' cellspacing='1'>
+<tr style='background:#ffffff;'><td colspan='12'>商品列表</td></tr>
+<tr style='background:#ffffff;'><td>商品id</td><td>机型</td><td>注册时间</td><td>注册ip</td><td>最后活跃时间</td><td>最后活跃ip</td><td>归属手机端数量</td><td>使用记录</td><td>在线状态</td><td>实时状态</td><td>地图位置ios</td><td>地图位置android</td></tr>
+<?php
+    foreach($data as $item)
+    {
+        $isOnline = ServiceFactory::getService("Machine")->isActive($item['tp_machineid']);
+        if($isOnline)
+        {
+            $isOnlineStr = "<font color='#000000'><b>在线</b></font>"; 
+        }
+        else
+        {
+            $isOnlineStr = "<font color='#999999'>不在线</font>"; 
+        }
+
+        $actionLogStr = "";
+
+        switch($item['type'])
+        {
+            case "02":
+                $actionlogNum = ServiceFactory::getService("Humidifier")->getActionLogNumForAdmin($item['tp_machineid']);
+                break;
+			case "10":
+                $actionlogNum = ServiceFactory::getService("Attendance")->getActionLogNumForAdmin($item['tp_machineid']);
+                break;
+            case getLightTag():
+            case getRgbTag():
+                $actionlogNum = getLightService()->getActionLogNum($item['tp_machineid']);
+                break;
+            case getMosquitokillerTag():
+                $actionlogNum = getMosquitokillerService()->getActionLogNum($item['tp_machineid']);
+                break;
+            default:
+                $actionlogNum = ServiceFactory::getService("Teapot")->getActionLogNumForAdmin($item['tp_machineid']);
+                break;
+        }
+
+        if($actionlogNum > 0)
+        {
+            $actionLogStr = "<a href='/admin/actionlog/tpMachineid/".$item['tp_machineid']."'>".$actionlogNum."条</a>"; 
+        }
+
+        echo "<tr style='background:#ffffff;'><td style='width:230px;'>".$item['machineid']."</td><td>".machineType($item['type'])."</td><td>".date("Y-m-d H:i:s",$item['createtime'])."</td><td>".ip($item['create_ip'])."</td><td>".date("Y-m-d H:i:s", $item['last_active_time'])."</td><td>".ip($item['last_active_ip'])."</td><td>";
+        if(!empty($item['appNum']))
+        {
+            echo "<a href='/admin/appmanage/tpMachineid/".$item['tp_machineid']."'>".$item['appNum']."部</a>"; 
+        }
+        else
+        {
+            echo "0部";
+        }
+        echo "</td><td>".$actionLogStr."</td><td>".$isOnlineStr."</td><td><a href='/admin/currstate/tpMachineid/".$item['tp_machineid']."'>查看</a></td>";
+
+        //ios
+        echo "<td>";
+        if(!empty($item['longitude']) || !empty($item['latitude']))
+        {
+            echo "<a href='/admin/location/longitude/".$item['longitude']."/latitude/".$item['latitude']."' target='blank'>查看</a>";
+        }
+        else
+        {
+            echo ""; 
+        }
+        echo "</td>";
+
+        //android
+        echo "<td>";
+        if(!empty($item['longitude_android']) || !empty($item['latitude_android']))
+        {
+            echo "<a href='/admin/location/longitude/".$item['longitude_android']."/latitude/".$item['latitude_android']."' target='blank'>查看</a>";
+        }
+        else
+        {
+            echo ""; 
+        }
+        echo "</td>";
+        
+        
+        echo "</tr>"; 
+    }
+?>
+<table>
+<?php
+    echo "<center>一共".$total."台&nbsp;在线".$onlineTotal."台&nbsp;";
+    if($allPage > 1)
+    {
+        for($i=1; $i<=$allPage; ++$i)
+        {
+            if($i == $page)
+            {
+                echo "&nbsp;".$i."&nbsp;"; 
+            }
+            else
+            {
+                echo "&nbsp;<a href='/admin/machinemanage/page/".$i."/pagesize/".$pagesize."/status/".$_REQUEST['status']."'>&nbsp;".$i."&nbsp;</a>&nbsp;"; 
+            }
+        }
+    }
+    echo "</center>";
+}
+else
+{
+    echo "<center>没有找到相关记录</center>";
+}
+?>
+
+<?php require Common::getRequirePath() . "/footer.phtml"; ?>

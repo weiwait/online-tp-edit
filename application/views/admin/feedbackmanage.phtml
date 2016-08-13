@@ -1,0 +1,52 @@
+<?php use utils\Common;?>
+<?php use base\ServiceFactory;?>
+<?php require Common::getRequirePath() . "/header.phtml"; ?>
+
+<form action='/admin/feedbackmanage' method='POST'>
+<table style='width:100%;background:#ACC5E0;' cellpadding='4' cellspacing='1'>
+<tr style='background:#ffffff;'><td colspan='2'>反馈搜索</td></tr>
+<tr style='background:#ffffff;'><td style='width:60px;'>app id</td><td><input type='text' name='appid' style='width:500px' value='<?php echo $_REQUEST['appid'];?>'></td></tr>
+<table>
+<center><input type='submit' value=' 确 定 '></center>
+</form>
+
+<?php
+if(!empty($data) && $total > 0)
+{
+?>
+<table style='width:100%;background:#ACC5E0;' cellpadding='4' cellspacing='1'>
+<tr style='background:#ffffff;'><td colspan='6'>反馈列表</td></tr>
+<tr style='background:#ffffff;'><td>app id</td><td>最后更新时间</td><td>添加ip</td><td>最后更新内容</td><td>未读数量</td><td>查看</td></tr>
+<?php
+    foreach($data as $item)
+    {
+        $unReadNum = ServiceFactory::getService("Feedback")->getUnReadNum($item['tp_appid']); 
+        echo "<tr style='background:#ffffff;'><td style='width:230px;'><a href='/admin/appmanage/appid/".$item['appid']."'>".$item['appid']."</a></td><td>".date("Y-m-d H:i:s",$item['createtime'])."</td><td>".ip($item['ip'])."</td><td>".$item['content']."</td><td>".$unReadNum."</td><td><a href='/admin/feedbackdetail/tpAppid/".$item['tp_appid']."'>查看</a></td></tr>";
+    }
+?>
+<table>
+<?php
+    echo "<center>一共".$total."条&nbsp;";
+    if($allPage > 1)
+    {
+        for($i=1; $i<=$allPage; ++$i)
+        {
+            if($i == $page)
+            {
+                echo "&nbsp;".$i."&nbsp;"; 
+            }
+            else
+            {
+                echo "&nbsp;<a href='/admin/feedbackmanage/page/".$i."/pagesize/".$pagesize."'>".$i."</a>&nbsp;"; 
+            }
+        }
+    }
+    echo "</center>";
+}
+else
+{
+    echo "<center>没有找到相关记录</center>";
+}
+?>
+
+<?php require Common::getRequirePath() . "/footer.phtml"; ?>

@@ -1,0 +1,70 @@
+<?php use utils\Common;?>
+<?php require Common::getRequirePath() . "/header.phtml"; ?>
+
+<form action='/test/humidifiersaveconfig' method='POST'>
+<table style='width:100%;background:#ACC5E0;' cellpadding='4' cellspacing='1'>
+<tr style='background:#ffffff;'><td colspan='2'>app上传用户自定义配置</td></tr>
+<?php
+echo Common::testItem("machineid", "machineid");
+echo Common::testItem("appid", "appid");
+/*
+echo Common::testItem("summergrade1top", "summergrade1top");
+echo Common::testItem("summergrade1bottom", "summergrade1bottom");
+echo Common::testItem("summergrade2top", "summergrade2top");
+echo Common::testItem("summergrade2bottom", "summergrade2bottom");
+echo Common::testItem("summergrade3top", "summergrade3top");
+echo Common::testItem("summergrade3bottom", "summergrade3bottom");
+
+echo Common::testItem("wintergrade1top", "wintergrade1top");
+echo Common::testItem("wintergrade1bottom", "wintergrade1bottom");
+echo Common::testItem("wintergrade2top", "wintergrade2top");
+echo Common::testItem("wintergrade2bottom", "wintergrade2bottom");
+echo Common::testItem("wintergrade3top", "wintergrade3top");
+echo Common::testItem("wintergrade3bottom", "wintergrade3bottom");
+*/
+
+echo Common::testItem("drymode", "drymode");
+echo Common::testItem("wetmode", "wetmode");
+echo Common::testItem("enableai", "enableai");
+echo Common::testItem("enableusernearstart", "enableusernearstart");
+echo Common::testItem("enableuserfarstop", "enableuserfarstop");
+echo Common::testItem("toodryremind", "toodryremind");
+?>
+<table>
+<center><input type='submit' value=' 确 定 '></center>
+</form>
+
+<?php
+if("POST" == $_SERVER['REQUEST_METHOD'])
+{
+?>
+<table style='width:100%;background:#ACC5E0;' cellpadding='4' cellspacing='1'>
+<tr style='background:#ffffff;'><td>请求详情</td></tr>
+<tr style='background:#ffffff;'><td><textarea style='width:100%;height:130px;'><?php echo $requestString;?></textarea></td></tr>
+<table>
+<table style='width:100%;background:#ACC5E0;' cellpadding='4' cellspacing='1'>
+<tr style='background:#ffffff;'><td>请求返回的结果</td></tr>
+<tr style='background:#ffffff;'><td><textarea style='width:100%;height:130px;'><?php echo $result;?></textarea></td></tr>
+<table>
+<table style='width:100%;background:#ACC5E0;' cellpadding='4' cellspacing='1'>
+<tr style='background:#ffffff;'><td>请求返回的结果(json格式)</td></tr>
+<tr style='background:#ffffff;'><td><textarea style='width:100%;height:130px;'>
+<?php
+if(false !== ($p = strpos($result, "{")))
+{
+    if(false !== ($p1 = strrpos($result, "}")))
+    {
+        $result = substr($result, $p, $p1 - $p + 1); 
+        $jsonArray = json_decode($result, true);
+        print_r($jsonArray);
+    }
+}
+?>
+</textarea></td></tr>
+<table>
+
+<?php
+}
+?>
+
+<?php require Common::getRequirePath() . "/footer.phtml"; ?>

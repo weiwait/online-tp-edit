@@ -1,0 +1,43 @@
+<?php use utils\Common;?>
+<?php require Common::getRequirePath() . "/header.phtml"; ?>
+
+<?php
+if(!empty($data))
+{
+?>
+<form action='/admin/feedbackdetail' method='post'>
+<table style='width:100%'>
+<tr><td>客服回复：</td></tr>
+<tr><td><textarea name='content' style='width:100%;height:100px;'></textarea></td></tr>
+</table>
+<input type='hidden' name='tpAppid' value='<?php echo $tpAppid;?>' />
+<center><input type='submit' name=' 确 定 '></center>
+</form>
+<?php
+echo "<br/><center><a href='/admin/feedbackmanage'>返回</a></center>";
+?>
+<table style='width:100%;background:#ACC5E0;' cellpadding='4' cellspacing='1'>
+<tr style='background:#ffffff;'><td>反馈详情</td></tr>
+<?php
+    foreach($data as $item)
+    {
+        if("0" == $item['type'])
+        {
+            echo "<tr style='background:#ffffff;'><td>用户反馈:<br/>时间:".date('Y-m-d H:i:s', $item['createtime'])."<br/>内容:".$item['content']."</td></tr>";
+        }
+        else
+        {
+            echo "<tr style='background:#eeeeee;'><td>客服回复:<br/>时间:".date('Y-m-d H:i:s', $item['createtime'])."<br/>内容:".$item['content']."</td></tr>";
+        }
+    }
+?>
+</table>
+<?php
+}
+else
+{
+    echo "<center>没有找到相关记录</center>";
+}
+?>
+
+<?php require Common::getRequirePath() . "/footer.phtml"; ?>

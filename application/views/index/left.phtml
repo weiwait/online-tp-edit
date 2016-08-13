@@ -1,0 +1,69 @@
+<?php use utils\Common;?>
+<?php require Common::getRequirePath() . "/header.phtml"; ?>
+<?php
+if(false !== stripos($_SERVER['REQUEST_URI'], "_online"))
+{
+    echo "<b>APP管理后台-<span style='color:#ff0000;'>线上环境(".Yaf_Registry::get('config')->mysql->nemo_app->database.")</span></b>";
+}
+else if(false !== stripos($_SERVER['REQUEST_URI'], "_test"))
+{
+    echo "<b>APP管理后台-<span style='color:#ff0000;'>测试环境(".Yaf_Registry::get('config')->mysql->nemo_app->database.")</span></b>";
+}
+else
+{
+    echo "<b>APP管理后台-<span style='color:#ff0000;'>开发环境(".Yaf_Registry::get('config')->mysql->nemo_app->database.")</span></b>";
+}
+?>
+<table>
+<tr><td><a href='index.php?c=tvchannel&a=add' target='right_frame'>新增频道</a></td></tr>
+<tr><td><a href='index.php?c=tvchannel&a=list' target='right_frame'>频道列表</a></td></tr>
+<tr><td><a href='index.php?c=tvaddr&a=add' target='right_frame'>新增直播地址</a></td></tr>
+<tr><td><a href='index.php?c=tvaddr&a=list' target='right_frame'>直播地址列表</a></td></tr>
+<tr><td><a href='index.php?c=radiochannel&a=add' target='right_frame'>新增电台</a></td></tr>
+<tr><td><a href='index.php?c=radiochannel&a=list' target='right_frame'>电台列表</a></td></tr>
+<tr><td><a href='index.php?c=radioaddr&a=add' target='right_frame'>新增电台地址</a></td></tr>
+<tr><td><a href='index.php?c=radioaddr&a=list' target='right_frame'>电台地址列表</a></td></tr>
+<tr><td><a href='index.php?c=tverrmsg&a=list' target='right_frame'>报错信息列表(全部)</a></td></tr>
+<tr><td><a href='index.php?c=tverrmsg&a=list&isread=0' target='right_frame'>报错信息列表(未读)</a></td></tr>
+
+<tr><td><a href='index.php?c=appresource&a=add' target='right_frame'>新增资源类型</a></td></tr>
+<tr><td><a href='index.php?c=appresource&a=list' target='right_frame'>资源类型列表</a></td></tr>
+<tr><td><a href='index.php?c=appresourceupdate&a=add' target='right_frame'>新增资源更新记录</a></td></tr>
+<tr><td><a href='index.php?c=appresourceupdate&a=list' target='right_frame'>资源更新记录列表</a></td></tr>
+
+<tr><td><a href='index.php?c=nav&a=add' target='right_frame'>新增导航</a></td></tr>
+<tr><td><a href='index.php?c=nav&a=list' target='right_frame'>导航列表</a></td></tr>
+
+<tr><td><a href='index.php?c=appversion&a=add' target='right_frame'>新增版本更新记录</a></td></tr>
+<tr><td><a href='index.php?c=appversion&a=list' target='right_frame'>版本更新记录列表</a></td></tr>
+<tr><td><a href='index.php?c=onlinetv&a=add' target='right_frame'>新增备用直播地址</a></td></tr>
+<tr><td><a href='index.php?c=onlinetv&a=list' target='right_frame'>备用直播地址列表</a></td></tr>
+
+<tr><td><a href='index.php?c=notice&a=add' target='right_frame'>新增小喇叭</a></td></tr>
+<tr><td><a href='index.php?c=notice&a=list' target='right_frame'>小喇叭列表</a></td></tr>
+<tr><td><a href='index.php?c=news&a=add' target='right_frame'>新增新闻</a></td></tr>
+<tr><td><a href='index.php?c=news&a=list' target='right_frame'>新闻列表</a></td></tr>
+<tr><td><a href='index.php?c=promote&a=add' target='right_frame'>新增推广</a></td></tr>
+<tr><td><a href='index.php?c=promote&a=list' target='right_frame'>推广列表</a></td></tr>
+
+<tr><td>【TV Show】</td></tr>
+<tr><td><a href='index.php?c=tvshow&a=import' target='right_frame'>TV Show导入</a></td></tr>
+<tr><td><a href='index.php?c=tvshowchannel&a=add' target='right_frame'>新增TV Show频道</a></td></tr>
+<tr><td><a href='index.php?c=tvshowchannel&a=list' target='right_frame'>TV Show频道列表</a></td></tr>
+<tr><td><a href='index.php?c=tvshowseries&a=add' target='right_frame'>新增TV Show电视剧</a></td></tr>
+<tr><td><a href='index.php?c=tvshowseries&a=list' target='right_frame'>TV Show电视剧列表</a></td></tr>
+<tr><td><a href='index.php?c=tvshowepisode&a=add' target='right_frame'>新增TV Show剧集</a></td></tr>
+<tr><td><a href='index.php?c=tvshowepisode&a=list' target='right_frame'>TV Show剧集列表</a></td></tr>
+
+<tr><td>【工具】</td></tr>
+<tr><td><a href='index.php?c=tvchannel&a=fixall' target='right_frame'>修正频道地址数</a></td></tr>
+<tr><td><a href='index.php?c=tvaddr&a=fixall' target='right_frame'>修正直播地址名称</a></td></tr>
+<tr><td><a href='index.php?c=tvaddr&a=sync' target='right_frame'>同步直播地址</a></td></tr>
+<tr><td>【音乐单曲】</td></tr>
+<tr><td><a href='index.php?c=musiconesong&a=clone' target='right_frame'>克隆单曲</a></td></tr>
+<tr><td><a href='index.php?c=musiconesong&a=list' target='right_frame'>单曲列表</a></td></tr>
+</table>
+
+
+<?php require Common::getRequirePath() . "/footer.phtml"; ?>
+

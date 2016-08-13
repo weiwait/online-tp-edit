@@ -1,0 +1,94 @@
+<?php use utils\Common;?>
+<?php require Common::getRequirePath() . "/header.phtml"; ?>
+<?php
+echo form_begin("index.php?c=".$controllerName."&a=update");
+echo table_begin("编辑直播地址");
+/*
+
+CREATE TABLE IF NOT EXISTS `tv_addr` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增id',
+  `channel_id` int(11) NULL COMMENT '频道id',
+  `addr` varchar(256) NULL COMMENT '直播地址',
+  `name` varchar(32) NULL COMMENT '直播名称',
+  `source` varchar(64) NULL COMMENT '地址来源',
+  `source_desc` varchar(64) NULL COMMENT '来源说明',
+  `comment` varchar(64) NULL COMMENT '备注',
+  `isdelete` int(1) NULL COMMENT '是否删除',
+  `isactive` int(1) NULL COMMENT '是否启用',
+  `err_count` int(11) NULL COMMENT '报错数量',
+
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=100 ;
+*/
+
+$itemArray = array(
+    //array("title"=>"频道id", "name"=>"channel_id"),
+    array("title"=>"直播地址", "name"=>"addr"),
+    array("title"=>"直播名称", "name"=>"name"),
+    array("title"=>"地址来源", "name"=>"source"),
+    array("title"=>"来源说明", "name"=>"source_desc"),
+    array("title"=>"备注", "name"=>"comment"),
+    array("title"=>"热度", "name"=>"heat"),
+    array("title"=>"属性", "name"=>"quality"),
+    array("title"=>"是否推荐", "name"=>"recommend"),
+    array("title"=>"是否启用", "name"=>"isactive"),
+);
+$isactiveArray = array(
+    array("text"=>"激活", "value"=>1),
+    array("text"=>"未激活", "value"=>0),
+);
+$recommendArray = array(
+    array("text"=>"否", "value"=>0),
+    array("text"=>"是", "value"=>1),
+);
+$qualityArray = array(
+    array("text"=>"", "value"=>""),
+    array("text"=>"HD", "value"=>"HD"),
+    array("text"=>"LD", "value"=>"LD"),
+    array("text"=>"2G", "value"=>"2G"),
+    array("text"=>"3G", "value"=>"3G"),
+);
+?>
+<tr><td>频道id:</td><td>
+<select name='channel_id'>
+<?php
+foreach($channelData as $item)
+{
+    if($data['channel_id'] == $item['id'])
+    {
+        echo "<option selected='true' value='".$item['id']."'>".$item['name']."</option>";
+    }
+    else
+    {
+        echo "<option value='".$item['id']."'>".$item['name']."</option>";
+    }
+}
+?>
+</select>
+</td></tr>
+<?php
+foreach($itemArray as $item)
+{
+    if("isactive" == $item['name'])
+    {
+        echo tr_select($item['title'], $item['name'], $isactiveArray, $data[$item['name']]);
+    }
+    else if("recommend" == $item['name'])
+    {
+        echo tr_select($item['title'], $item['name'], $recommendArray, $data[$item['name']]);
+    }
+    else if("quality" == $item['name'])
+    {
+        echo tr_select($item['title'], $item['name'], $qualityArray, $data[$item['name']]);
+    }
+    else
+    {
+        echo tr_input($item['title'], $item['name'], $data[$item['name']]);
+    }
+}
+echo table_end();
+echo "<input type='hidden' name='id' value='".$data['id']."'>";
+echo form_end();
+?>
+
+<?php require Common::getRequirePath() . "/footer.phtml"; ?>

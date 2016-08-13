@@ -1,0 +1,120 @@
+<?php use utils\Common;?>
+<?php require Common::getRequirePath() . "/header.phtml"; ?>
+
+<?php
+if(!empty($data))
+{
+    switch($type)
+    {
+        case "02":
+        /*
+        echo "<center>使用天数:".$useStat['useDay']."天&nbsp;&nbsp;平均每天使用次数:".number_format($useStat['useNum']/$useStat['useDay'], 2, '.', '')."次&nbsp;&nbsp;平均每天使用的水容量:".number_format($useStat['totalLevel']/$useStat['useDay'], 2, '.', '')."L&nbsp;&nbsp;平均每天使用的时间:".number_format($useStat['totalTime']/$useStat['useDay'], 2, '.', '')."秒&nbsp;&nbsp;最多设定的湿度:".$useStat['maxHumidity']."</center>"; 
+        */
+?>
+<table style='width:100%;background:#ACC5E0;' cellpadding='4' cellspacing='1'>
+<tr style='background:#ffffff;'><td colspan='5'>使用记录</td></tr>
+<tr style='background:#ffffff;'><td>machineid</td><td>操作模式</td><td>开始时间</td><td>运行时长</td><td>湿度</td></tr>
+<?php
+    foreach($data as $item)
+    {
+        echo "<tr style='background:#ffffff;'><td style='width:230px;'>".$item['machineid']."</td><td>".operation($item['operation'])."</td><td>".$item['starttime']."</td><td>".secondToHHMMSS($item['costtime'])."</td><td>".$item['humidity']."</td></tr>";
+    }
+?>
+</table>
+<?php
+            break;
+        case "10":
+            
+?>
+<table style='width:100%;background:#ACC5E0;' cellpadding='4' cellspacing='1'>
+<tr style='background:#ffffff;'><td colspan='10'>使用记录</td></tr>
+<tr style='background:#ffffff;'>
+	<td>标签ID</td>
+	<td>考勤机ID</td>
+	<td>进入时间</td>
+	<td>进入ip</td>
+	<td>进入经度</td>
+	<td>进入纬度</td>
+	
+	<td>离开时间</td>
+	<td>离开ip</td>
+	<td>离开经度</td>
+	<td>离开纬度</td>
+</tr>
+<?php
+    foreach($data as $item)
+    {
+        echo "<tr style='background:#ffffff;'>
+		<td>".$item['labelid']."</td>
+		<td>".$item['machineid']."</td>
+		<td>".$item['create_time']."</td>
+		<td>".$item['create_ip']."</td>
+		<td>".$item['longitude']."</td>
+		<td>".$item['latitude']."</td>
+		
+		<td>".$item['leave_time']."</td>
+		<td>".$item['leave_ip']."</td>
+		<td>".$item['leave_longitude']."</td>
+		<td>".$item['leave_latitude']."</td>
+		</tr>";
+    }
+?>
+</table>
+<?php
+            break;
+        case getMosquitokillerTag():
+            echo "<center>使用天数:".$useStat['useDay']."天&nbsp;&nbsp;平均每天使用次数:".number_format($useStat['useNum']/$useStat['useDay'], 2, '.', '')."次&nbsp;&nbsp;</center>";
+?>
+            <table style='width:100%;background:#ACC5E0;' cellpadding='4' cellspacing='1'>
+                <tr style='background:#ffffff;'><td colspan='6'>使用记录</td></tr>
+                <tr style='background:#ffffff;'><td>machineid</td><td>操作模式</td><td>开始时间</td><td>运行时长</td><td>上传时间</td><td>上传IP</td></tr>
+                <?php
+                foreach($data as $item)
+                {
+                    echo "<tr style='background:#ffffff;'><td style='width:230px;'>".$item['machineid']."</td><td>".operation($item['operation'])."</td><td>".$item['starttime']."</td><td>".$item['costtime']."</td><td>".date("Y-m-d H:i:s", $item['createtime'])."</td><td>".ip($item['ip'])."</td></tr>";
+                }
+                ?>
+            </table>
+<?php
+            break;
+        case getLightTag():
+        case getRgbTag():
+            echo "<center>使用天数:".$useStat['useDay']."天&nbsp;&nbsp;平均每天使用次数:".number_format($useStat['useNum']/$useStat['useDay'], 2, '.', '')."次&nbsp;&nbsp;</center>";
+?>
+            <table style='width:100%;background:#ACC5E0;' cellpadding='4' cellspacing='1'>
+                <tr style='background:#ffffff;'><td colspan='6'>使用记录</td></tr>
+                <tr style='background:#ffffff;'><td>machineid</td><td>操作模式</td><td>开始时间</td><td>运行时长</td><td>上传时间</td><td>上传IP</td></tr>
+                <?php
+                foreach($data as $item)
+                {
+                    echo "<tr style='background:#ffffff;'><td style='width:230px;'>".$item['machineid']."</td><td>".operation($item['operation'])."</td><td>".$item['starttime']."</td><td>".$item['costtime']."</td><td>".date("Y-m-d H:i:s", $item['createtime'])."</td><td>".ip($item['ip'])."</td></tr>";
+                }
+                ?>
+            </table>
+<?php
+            break;
+        default:
+        echo "<center>使用天数:".$useStat['useDay']."天&nbsp;&nbsp;平均每天使用次数:".number_format($useStat['useNum']/$useStat['useDay'], 2, '.', '')."次&nbsp;&nbsp;平均每天烧水容量:".number_format($useStat['totalLevel']/$useStat['useDay'], 2, '.', '')."L&nbsp;&nbsp;平均每天耗电:".number_format($useStat['totalEnergy']/$useStat['useDay'], 2, '.', '')."KW&nbsp;&nbsp;最多设定的温度:".$useStat['maxTemp']."</center>"; 
+?>
+<table style='width:100%;background:#ACC5E0;' cellpadding='4' cellspacing='1'>
+<tr style='background:#ffffff;'><td colspan='12'>使用记录</td></tr>
+<tr style='background:#ffffff;'><td>machineid</td><td>操作模式</td><td>开始时间</td><td>结束时间</td><td>容量</td><td>温度</td><td>是否沸腾</td><td>净化时间</td><td>保温时间</td><td>上传时间</td><td>上传ip</td><td>耗电</td></tr>
+<?php
+    foreach($data as $item)
+    {
+        echo "<tr style='background:#ffffff;'><td style='width:230px;'>".$item['machineid']."</td><td>".operation($item['operation'])."</td><td>".$item['starttime']."</td><td>".$item['endtime']."</td><td>".$item['level']."</td><td>".$item['temp']."</td><td>".($item['boil']?"是":"否")."</td><td>".$item['purify']."分钟</td><td>".$item['keepwarm']."分钟</td><td>".date("Y-m-d H:i:s", $item['createtime'])."</td><td>".ip($item['ip'])."</td><td>".$item['energy']."</td></tr>";
+    }
+?>
+</table>
+<?php
+        break;
+    }
+}
+else
+{
+    echo "<center>没有找到相关记录</center>";
+}
+echo "<br/><center><a href='javascript:history.go(-1);'>返回</a></center>";
+?>
+
+<?php require Common::getRequirePath() . "/footer.phtml"; ?>

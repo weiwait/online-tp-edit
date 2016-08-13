@@ -1,0 +1,70 @@
+<?php use utils\Common;?>
+<?php require Common::getRequirePath() . "/header.phtml"; ?>
+
+<?php
+if(!empty($data) && !empty($data['last_update_time']))
+{
+    switch($type)
+    {
+        case "02":
+?>
+<table style='width:100%;background:#ACC5E0;' cellpadding='4' cellspacing='1'>
+<tr style='background:#ffffff;'><td colspan='2'>当前状态</td></tr>
+<tr style='background:#ffffff;'><td style='width:100px;text-align:right;'>容量:</td><td><?php echo $data['level'];?></td></tr>
+<tr style='background:#ffffff;'><td style='width:100px;text-align:right;'>湿度:</td><td><?php echo $data['humidity'];?></td></tr>
+<tr style='background:#ffffff;'><td style='width:100px;text-align:right;'>工作状态:</td><td><?php echo humidifierState($data['state']);?></td></tr>
+<tr style='background:#ffffff;'><td style='width:100px;text-align:right;'>最后更新时间:</td><td><?php echo date("Y-m-d H:i:s", $data['last_update_time']);?></td></tr>
+</table>
+<?php
+        break;
+?>
+<?php
+    case "06":
+?>
+        <table style='width:100%;background:#ACC5E0;' cellpadding='4' cellspacing='1'>
+            <tr style='background:#ffffff;'><td colspan='2'>当前状态</td></tr>
+            <tr style='background:#ffffff;'><td style='width:100px;text-align:right;'>水位:</td><td><?php echo $data['waterlevel'];?></td></tr>
+            <tr style='background:#ffffff;'><td style='width:100px;text-align:right;'>工作状态:</td><td><?php echo mosquitokillerState($data['state']);?></td></tr>
+            <tr style='background:#ffffff;'><td style='width:100px;text-align:right;'>最后更新时间:</td><td><?php echo date("Y-m-d H:i:s", $data['last_update_time']);?></td></tr>
+        </table>
+<?php
+        break;
+?>
+            <?php
+        case "03":
+        case "05":
+?>
+        <table style='width:100%;background:#ACC5E0;' cellpadding='4' cellspacing='1'>
+            <tr style='background:#ffffff;'><td colspan='2'>当前状态</td></tr>
+            <tr style='background:#ffffff;'><td style='width:100px;text-align:right;'>亮度:</td><td><?php echo $data['lightness'];?></td></tr>
+            <tr style='background:#ffffff;'><td style='width:100px;text-align:right;'>色温:</td><td><?php echo $data['temperature'];?></td></tr>
+            <tr style='background:#ffffff;'><td style='width:100px;text-align:right;'>红色:</td><td><?php echo $data['red'];?></td></tr>
+            <tr style='background:#ffffff;'><td style='width:100px;text-align:right;'>绿色:</td><td><?php echo $data['green'];?></td></tr>
+            <tr style='background:#ffffff;'><td style='width:100px;text-align:right;'>蓝色:</td><td><?php echo $data['blue'];?></td></tr>
+            <tr style='background:#ffffff;'><td style='width:100px;text-align:right;'>工作状态:</td><td><?php echo lightState($data['state']);?></td></tr>
+            <tr style='background:#ffffff;'><td style='width:100px;text-align:right;'>最后更新时间:</td><td><?php echo date("Y-m-d H:i:s", $data['last_update_time']);?></td></tr>
+        </table>
+<?php
+        break;
+        default:
+?>
+<table style='width:100%;background:#ACC5E0;' cellpadding='4' cellspacing='1'>
+<tr style='background:#ffffff;'><td colspan='2'>当前状态</td></tr>
+<tr style='background:#ffffff;'><td style='width:100px;text-align:right;'>容量:</td><td><?php echo $data['level'];?></td></tr>
+<tr style='background:#ffffff;'><td style='width:100px;text-align:right;'>温度:</td><td><?php echo $data['temp'];?></td></tr>
+<tr style='background:#ffffff;'><td style='width:100px;text-align:right;'>是否在底座:</td><td><?php echo ($data['hub']?"在":"不在");?></td></tr>
+<tr style='background:#ffffff;'><td style='width:100px;text-align:right;'>工作状态:</td><td><?php echo teapotState($data['state']);?></td></tr>
+<tr style='background:#ffffff;'><td style='width:100px;text-align:right;'>最后更新时间:</td><td><?php echo date("Y-m-d H:i:s", $data['last_update_time']);?></td></tr>
+</table>
+<?php
+        break;
+    }
+}
+else
+{
+    echo "<center>没有找到相关记录</center>";
+}
+echo "<br/><center><a href='javascript:history.go(-1);'>返回</a></center>";
+?>
+
+<?php require Common::getRequirePath() . "/footer.phtml"; ?>

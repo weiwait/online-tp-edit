@@ -1,0 +1,150 @@
+<?php use utils\Common;?>
+<?php require Common::getRequirePath() . "/header.phtml"; ?>
+
+<?php
+echo form_begin("index.php?c=".$controllerName."&a=list");
+?>
+<table>
+  <tr>
+    <td>id:</td><td><input name='id' value='<?php echo $_REQUEST['id'];?>'></td>
+    <td>频道id:</td><td><input name='channel_id' value='<?php echo $_REQUEST['channel_id'];?>'></td>
+    <td>频道名称:</td><td><input name='channel_name' value='<?php echo $_REQUEST['channel_name']?>'></td>
+    <td>直播地址:</td><td><input name='addr'></td>
+    <td>是否激活:</td><td><select name='isactive'>
+        <option value=''>全部</option>
+        <option value='1' <?php if('1' == $_REQUEST['isactive']) echo "selected";?>>激活</option>
+        <option value='0' <?php if('0' == $_REQUEST['isactive']) echo "selected";?>>未激活</option>
+    </select></td>
+  </tr>
+</table>
+<?php
+echo form_end(" 查询地址列表 ");
+?>
+
+<?php
+echo form_begin("index.php?c=".$controllerName."&a=delete");
+echo table_list_begin("频道列表");
+/*
+CREATE TABLE IF NOT EXISTS `tv_addr` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增id',
+  `channel_id` int(11) NULL COMMENT '频道id',
+  `addr` varchar(256) NULL COMMENT '直播地址',
+  `name` varchar(32) NULL COMMENT '直播名称',
+  `source` varchar(64) NULL COMMENT '地址来源',
+  `source_desc` varchar(64) NULL COMMENT '来源说明',
+  `comment` varchar(64) NULL COMMENT '备注',
+  `isdelete` int(1) NULL COMMENT '是否删除',
+  `isactive` int(1) NULL COMMENT '是否启用',
+  `err_count` int(11) NULL COMMENT '报错数量',
+
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=100 ;
+*/
+
+$itemArray = array(
+    array("title"=>"id", "name"=>"id"),
+    array("title"=>"频道id", "name"=>"channel_id"),
+    array("title"=>"频道名称", "name"=>"tv_channel_name"),
+    array("title"=>"直播地址", "name"=>"addr"),
+    array("title"=>"直播名称", "name"=>"name"),
+    //array("title"=>"地址来源", "name"=>"source"),
+    array("title"=>"来源说明", "name"=>"source_desc"),
+    array("title"=>"备注", "name"=>"comment"),
+    array("title"=>"报错数量", "name"=>"err_count"),
+    array("title"=>"热度", "name"=>"heat"),
+    array("title"=>"属性", "name"=>"quality"),
+    array("title"=>"推荐", "name"=>"recommend"),
+    array("title"=>"激活", "name"=>"isactive"),
+    array("title"=>"编辑", "name"=>""),
+);
+
+echo "<tr>";
+echo "<td><input type='checkbox' id='checkall_checkbox' onclick='checkall()'></td>";
+foreach($itemArray as $item)
+{
+    echo "<td>".$item['title']."</td>";
+}
+echo "</tr>";
+
+foreach($data as $record)
+{
+    echo "<tr style='background:#ffffff;'>"; 
+    echo "<td><input type='checkbox' name='id[]' value='".$record['id']."'></td>";
+    foreach($itemArray as $item)
+    {
+        if(!empty($item['name']))
+        {
+            if("isactive" == $item['name'])
+            {
+                $value = 1 == $record[$item['name']]?"已激活":"未激活";
+                echo "<td>".$value."</td>"; 
+            }
+            else if("recommend" == $item['name'])
+            {
+                $value = 1 == $record[$item['name']]?"推荐":"";
+                echo "<td>".$value."</td>"; 
+            }
+            else if("id" == $item['name'])
+            {
+                echo "<td><a href='index.php?c=".$controllerName."&a=edit&id=".$record['id']."' title='编辑'>".$record[$item['name']]."</a></td>"; 
+            }
+            else if("addr" == $item['name'])
+            {
+                $len = 100;
+                $value = $record[$item['name']];
+                if(strlen($value) > $len)
+                {
+                    $p1 = substr($value, 0, $len); 
+                    $p2 = substr($value, $len); 
+                    $value = $p1."<br/>".$p2;
+                }
+                echo "<td style='width:300px;word-wrap:break-word;'>".$value."</td>"; 
+            }
+            else
+            {
+                echo "<td>".$record[$item['name']]."</td>"; 
+            }
+        }
+    }
+    echo "<td><a href='index.php?c=".$controllerName."&a=edit&id=".$record['id']."'>编辑</a></td>";
+    echo "</tr>"; 
+}
+
+echo table_end();
+echo form_end("删 除");
+
+echo "<br/>";
+echo "<center>";
+unset($_REQUEST['c']);
+unset($_REQUEST['a']);
+unset($_REQUEST['page']);
+$param = "";
+foreach($_REQUEST as $k=>$v)
+{
+    $param .= "&".$k."=".$v;
+}
+for($i=1; $i<=$allPage; $i++)
+{
+    echo "&nbsp;&nbsp;<b><a href='index.php?c=".$controllerName."&a=list&page=".$i.$param."'>".$i."</a></b>&nbsp;&nbsp;";
+    if($i%20 == 19)
+    {
+        echo "<br/>";
+    }
+}
+echo "总数:".$total."";
+echo "</center>";
+
+?>
+<script>
+function checkall()
+{
+    var checkall_checkbox = document.getElementById("checkall_checkbox");
+    var items = document.getElementsByName("id[]");
+    for(var i=0;i<items.length;i++)
+    {
+        items[i].checked = checkall_checkbox.checked; 
+    }
+}
+</script>
+
+<?php require Common::getRequirePath() . "/footer.phtml"; ?>
