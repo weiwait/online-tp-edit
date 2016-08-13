@@ -37,4 +37,8 @@ class PositionController extends MCommonController
         $sql = "INSERT INTO `weiwait` (`tp_appid`, `appid`, `title`, `content`, createtime) VALUES ($tpAppid, '$appid', '$title','$content'," . time() . ")";
         DaoFactory::getDao("Main")->query($sql);
     }
+    private function phpstorm()
+    {
+
+    }
 }

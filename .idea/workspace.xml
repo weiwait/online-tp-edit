@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" readonly="true" id="45192e3c-8f35-415a-9688-9fa24b2772b2" name="Default" comment="" />
+    <list default="true" readonly="true" id="45192e3c-8f35-415a-9688-9fa24b2772b2" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/controllers/Position.php" afterPath="$PROJECT_DIR$/application/controllers/Position.php" />
+    </list>
     <ignored path="online-tp.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -24,10 +27,10 @@
       <file leaf-file-name="Position.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application/controllers/Position.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="12" column="7" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
+            <state relative-caret-position="517">
+              <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
               <folding>
-                <marker date="1471059711473" expanded="true" signature="910:1049" ph="INSERT INTO `weiwait`... " />
+                <marker date="1471062354126" expanded="true" signature="910:1049" ph="INSERT INTO `weiwait`... " />
               </folding>
             </state>
           </provider>
@@ -44,8 +47,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/application/controllers/Position.php" />
         <option value="$PROJECT_DIR$/phpstorm github.test" />
+        <option value="$PROJECT_DIR$/application/controllers/Position.php" />
       </list>
     </option>
   </component>
@@ -234,7 +237,7 @@
       <workItem from="1470993287391" duration="2430000" />
       <workItem from="1470995765248" duration="742000" />
       <workItem from="1471050743070" duration="1829000" />
-      <workItem from="1471052656472" duration="9165000" />
+      <workItem from="1471052656472" duration="9585000" />
     </task>
     <task id="LOCAL-00001" summary="phpstorm remote">
       <created>1471061732492</created>
@@ -247,13 +250,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14166000" />
+    <option name="totallyTimeSpent" value="14586000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1456" height="876" extended-state="7" />
+    <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20902778" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20902778" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298292" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984293" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -300,7 +303,7 @@
         <state relative-caret-position="1056">
           <caret line="32" column="5" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
           <folding>
-            <marker date="1471059711473" expanded="true" signature="910:1049" ph="INSERT INTO `weiwait`... " />
+            <marker date="1471062354126" expanded="true" signature="910:1049" ph="INSERT INTO `weiwait`... " />
           </folding>
         </state>
       </provider>
@@ -320,7 +323,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1471059711473" expanded="true" signature="910:1049" ph="INSERT INTO `weiwait`... " />
+            <marker date="1471062354126" expanded="true" signature="910:1049" ph="INSERT INTO `weiwait`... " />
           </folding>
         </state>
       </provider>
@@ -343,21 +346,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers/Position.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="12" column="7" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
-          <folding>
-            <marker date="1471059711473" expanded="true" signature="910:1049" ph="INSERT INTO `weiwait`... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers/githubtest.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/Position.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="517">
+          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+          <folding>
+            <marker date="1471062354126" expanded="true" signature="910:1049" ph="INSERT INTO `weiwait`... " />
+          </folding>
         </state>
       </provider>
     </entry>
